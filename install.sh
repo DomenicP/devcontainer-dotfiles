@@ -5,7 +5,6 @@ set -eu
 main() {
     check_compatibility
     install_packages
-    set_default_shell
 }
 
 check_compatibility() {
@@ -34,21 +33,29 @@ check_compatibility() {
 
 install_packages() {
     # Add PPA for Fish 4.x
-    sudo add-apt-repository ppa:fish-shell/release-4
+    # software-properties-common is required for add-apt-repository
     sudo apt-get update
-    sudo apt-get install -y \
+    sudo apt-get install -y --no-install-recommends software-properties-common
+    sudo add-apt-repository -y ppa:fish-shell/release-4
+
+    # Install packages
+    sudo apt-get update
+    sudo apt-get install -y --no-install-recommends \
+        bat \
         fd-find \
         fish \
         fzf \
-        ripgrep
+        jq \
+        ripgrep \
+        tree
 
-    # Add fd symlink
-    sudo ln -s "$(which fdfind)" /usr/local/bin/fd
-}
+    # Add symlinks
+    sudo ln -sf "$(which batcat)" /usr/local/bin/cat
+    sudo ln -sf "$(which fdfind)" /usr/local/bin/fd
 
-set_default_shell() {
-    # Change the default shell to fish
-    chsh -s "$(which fish)"
+    # Add shell hooks
+    mkdir -p ~/.config/fish
+    echo "direnv hook fish | source" >>~/.config/fish/config.fish
 }
 
 main "$@"
