@@ -14,11 +14,14 @@ sudo apt-get install -y --no-install-recommends \
     bat \
     fd-find \
     fish \
-    fzf \
     jq \
     ripgrep \
     tmux \
     tree
+
+# Install a newer version of fzf
+git clone --depth 1 --branch v0.65.1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install --all
 
 # Install Starship
 curl -sS https://starship.rs/install.sh | sudo sh -s -- --yes
