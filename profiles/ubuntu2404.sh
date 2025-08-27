@@ -17,7 +17,8 @@ sudo apt-get install -y --no-install-recommends \
     jq \
     ripgrep \
     tmux \
-    tree
+    tree \
+    yq
 
 # Install a newer version of fzf
 git clone --depth 1 --branch v0.65.1 https://github.com/junegunn/fzf.git ~/.fzf
