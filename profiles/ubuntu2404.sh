@@ -2,6 +2,17 @@
 
 set -eu
 
+# Bind mounts can end up creating intermediate directories owned by root. Fix ownership of key
+# directories non-recursively so we don't mess with permissions on files mounted from the host.
+DIRECTORIES_I_OWN=(
+    ~/.config
+    ~/.local
+    ~/.local/share
+)
+for my_dir in "${DIRECTORIES_I_OWN[@]}"; do
+    sudo chown "$(id -u):$(id -g)" "$my_dir"
+done
+
 # Add PPA for Fish 4.x
 # software-properties-common is required for add-apt-repository
 sudo apt-get update
