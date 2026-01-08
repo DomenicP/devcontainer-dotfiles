@@ -2,14 +2,18 @@
 
 set -eu
 
-# Bind mounts can end up creating intermediate directories owned by root. Fix ownership of key
-# directories non-recursively so we don't mess with permissions on files mounted from the host.
-DIRECTORIES_I_OWN=(
-    ~/.config
-    ~/.local
-    ~/.local/share
+FZF_VERSION=v0.67.0
+FZF_HOME="$HOME/.fzf"
+
+# Bind mounts can end up creating intermediate directories owned by root. Fix
+# ownership of key directories non-recursively so we don't mess with
+# permissions on files mounted from the host.
+MY_DIRECTORIES=(
+    "$HOME/.config"
+    "$HOME/.local"
+    "$HOME/.local/share"
 )
-for my_dir in "${DIRECTORIES_I_OWN[@]}"; do
+for my_dir in "${MY_DIRECTORIES[@]}"; do
     sudo chown "$(id -u):$(id -g)" "$my_dir"
 done
 
@@ -23,6 +27,7 @@ sudo add-apt-repository -y ppa:fish-shell/release-4
 sudo apt-get update
 sudo apt-get install -y --no-install-recommends \
     bat \
+    direnv \
     fd-find \
     fish \
     jq \
@@ -32,15 +37,16 @@ sudo apt-get install -y --no-install-recommends \
     yq
 
 # Install a newer version of fzf
-git clone --depth 1 --branch v0.65.1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install --all
+git clone --depth 1 --branch $FZF_VERSION \
+    https://github.com/junegunn/fzf.git "$FZF_HOME"
+"$FZF_HOME/install" --all
 
 # Install Starship
 curl -sS https://starship.rs/install.sh | sudo sh -s -- --yes
 
 # Add shell hooks
-mkdir -p ~/.config/fish
-cat <<EOF >>~/.config/fish/config.fish
+mkdir -p "$HOME/.config/fish"
+cat << EOF >> "$HOME/.config/fish/config.fish"
 direnv hook fish | source
 starship init fish | source
 EOF

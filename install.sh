@@ -15,11 +15,11 @@ Ubuntu)
         profiles/ubuntu2404.sh
         ;;
     *)
-        echo "WARN: Unsupported Ubuntu release: $DISTRIB_RELEASE"
+        echo "WARNING: Unsupported Ubuntu release: $DISTRIB_RELEASE"
         ;;
     esac
     ;;
 *)
-    echo "WARN: Unsupported distribution: $DISTRIB_ID"
+    echo "WARNING: Unsupported distribution: $DISTRIB_ID"
     ;;
 esac
