@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+PACKAGES=(
+    bat
+    direnv
+    fd-find
+    fish
+    jq
+    ripgrep
+    tmux
+    tree
+    yq
+)
+
+# Add PPA for Fish 4.x
+# software-properties-common is required for add-apt-repository
+sudo apt-get update
+sudo apt-get install -y --no-install-recommends software-properties-common
+sudo add-apt-repository -y ppa:fish-shell/release-4
+
+# Install APT packages
+sudo apt-get update
+sudo apt-get install -y --no-install-recommends "${PACKAGES[*]}"
+
+# Add symlinks
+sudo ln -sf "$(which batcat)" /usr/local/bin/bat
+sudo ln -sf "$(which fdfind)" /usr/local/bin/fd
+
+# Add direnv shell hooks
+echo "eval \"\$(direnv hook bash)\"" >> "$HOME/.bashrc"
+mkdir -p "$HOME/.config/fish"
+echo "direnv hook fish | source" >> "$HOME/.config/fish/config.fish"

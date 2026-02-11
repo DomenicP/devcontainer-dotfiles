@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Install starship
+curl -sS https://starship.rs/install.sh | sudo sh -s -- --yes
+
+# Add shell hook for Fish
+mkdir -p "$HOME/.config/fish"
+echo "starship init fish | source" >> "$HOME/.config/fish/config.fish"

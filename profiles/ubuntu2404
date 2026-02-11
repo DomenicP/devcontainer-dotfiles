@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+tasks/fix-dirs
+tasks/install-apt-pkgs
+tasks/install-starship
+tasks/install-fzf

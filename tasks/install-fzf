@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+FZF_VERSION=v0.67.0
+FZF_HOME="$HOME/.fzf"
+
+# Install a newer version of fzf
+git clone --depth 1 --branch $FZF_VERSION https://github.com/junegunn/fzf.git "$FZF_HOME"
+"$FZF_HOME/install" --all

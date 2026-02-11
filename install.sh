@@ -12,7 +12,7 @@ case "$DISTRIB_ID" in
 Ubuntu)
     case "$DISTRIB_RELEASE" in
     24.04)
-        profiles/ubuntu2404.sh
+        profiles/ubuntu2404
         ;;
     *)
         echo "WARNING: Unsupported Ubuntu release: $DISTRIB_RELEASE"

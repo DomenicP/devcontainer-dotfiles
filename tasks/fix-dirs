@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Bind mounts can end up creating intermediate directories owned by root. Fix
+# ownership of key directories non-recursively so we don't mess with
+# permissions on files mounted from the host.
+MY_DIRS=(
+    "$HOME/.config"
+    "$HOME/.local"
+    "$HOME/.local/share"
+)
+for my_dir in "${MY_DIRS[@]}"; do
+    if [ -d "$my_dir" ]; then
+        sudo chown "$(id -u):$(id -g)" "$my_dir"
+    fi
+done
