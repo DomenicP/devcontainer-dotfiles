@@ -14,7 +14,9 @@ MY_DIRECTORIES=(
     "$HOME/.local/share"
 )
 for my_dir in "${MY_DIRECTORIES[@]}"; do
-    sudo chown "$(id -u):$(id -g)" "$my_dir"
+    if [ -d "$my_dir" ]; then
+        sudo chown "$(id -u):$(id -g)" "$my_dir"
+    fi
 done
 
 # Add PPA for Fish 4.x
